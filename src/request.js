@@ -25,7 +25,7 @@ function rereq(options, done) {
   req.end();
 }
 
-export default function request({method, host, path, qs, agent}) {
+export default function request({method, host, path, qs, agent, proxy_host, proxy_params}) {
   const options = {
     host,
     method,
@@ -35,6 +35,11 @@ export default function request({method, host, path, qs, agent}) {
   if (agent) options.agent = agent;
   // will use cached cookieVal if set on 429 error
   if (cookieVal) options.headers = {'cookie': cookieVal};
+
+  if(proxy_host) { 
+    options.path = proxy_params + options.host + options.path 
+    options.host = override_host
+  }
 
   return new Promise((resolve, reject) => {
     const req = https.request(options, (res) => {

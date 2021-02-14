@@ -237,7 +237,12 @@ export function getInterestResults(request) {
     };
 
     if (obj.agent) options.agent = obj.agent;
-
+    
+    if (obj.proxy_host) {
+      nextOptions.proxy_host = obj.proxy_host
+      nextOptions.proxy_params = obj.proxy_params
+    };
+    
     const { path, resolution, _id } = map[searchType];
 
     return request(options)
@@ -284,6 +289,11 @@ export function getInterestResults(request) {
       };
 
       if (obj.agent) nextOptions.agent = obj.agent;
+
+      if (obj.proxy_host) {
+        nextOptions.proxy_host = obj.proxy_host
+        nextOptions.proxy_params = obj.proxy_params
+      };
 
       return request(nextOptions);
     })
@@ -336,6 +346,11 @@ export function getTrendingResults(request) {
     };
 
     if (obj.agent) options.agent = obj.agent;
+    
+    if (obj.proxy_host) {
+      nextOptions.proxy_host = obj.proxy_host
+      nextOptions.proxy_params = obj.proxy_params
+    };
 
     options.qs = {...options.qs, ...searchTypeMap[searchType].extraParams};
 
